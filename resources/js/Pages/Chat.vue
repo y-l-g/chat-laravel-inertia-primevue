@@ -72,7 +72,7 @@ window.Echo.channel('messages')
                 >
                     <p class="font-medium pb-1">{{ user_id === message.user.id ? "Moi" : message.user.name }}
                     </p>
-                    <p class="max-w-[400px] inline-block py-1 bg-primary-100 dark:bg-black px-2 rounded-xl">
+                    <p class="max-w-[400px] break-all inline-block py-1 bg-primary-100 dark:bg-black px-2 rounded-xl">
                         {{ message.content }}</p>
                     <p class="py-1 text-xs">{{ dayjs(message.created_at).fromNow() }}<i
                             class="pi pi-check ml-2 text-primary-400"
@@ -84,12 +84,12 @@ window.Echo.channel('messages')
         </ScrollPanel>
         <form
             class="flex p-5 dark:bg-surface-900 bg-surface-100 rounded-b-xl"
-            @submit.prevent="form.post('/'); form.content = ''"
+            @submit.prevent="form.post('/'); form.content = ''; scrollToBottom()"
         >
             <IftaLabel class="grow">
                 <Textarea
                     @keydown.enter.exact.prevent
-                    @keyup.enter="form.post('/'); form.content = ''"
+                    @keyup.enter="form.post('/'); form.content = ''; scrollToBottom()"
                     id="message"
                     class="w-full"
                     v-model="form.content"
