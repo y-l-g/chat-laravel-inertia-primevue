@@ -10,7 +10,18 @@ const form = useForm({
 <template>
 
     <Head title="Register" />
-    <form @submit.prevent="form.post(route('login'))">
+    <form
+        @submit.prevent="form.post(route('login'))"
+        class="
+        sm:p-[8%]
+        p-5
+        max-w-xl
+        h-screen
+        m-auto
+        flex-col
+        flex
+        gap-6"
+    >
         <InputText
             id="name"
             type="text"
@@ -25,7 +36,7 @@ const form = useForm({
             :class="{ 'opacity-25': form.processing }"
             :disabled="form.processing"
         >
-            Access to Chat
+            Se connecter
         </Button>
     </form>
 </template>
