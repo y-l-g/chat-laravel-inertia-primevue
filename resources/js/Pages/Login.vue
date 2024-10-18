@@ -35,6 +35,7 @@ const form = useForm({
         <Button
             :class="{ 'opacity-25': form.processing }"
             :disabled="form.processing"
+            @click.prevent="form.post(route('login'))"
         >
             Se connecter
         </Button>
