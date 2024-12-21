@@ -119,8 +119,8 @@ services:
   # VOLUMES
   ##################################################
 volumes:
-  laravel_chat_app_caddy_data:
-  laravel_chat_app_caddy_config:
+  laravel_chat_app_app_data:
+  laravel_chat_app_app_config:
   ##################################################
   laravel_chat_app_mysql_data:
   laravel_chat_app_redis_data:
