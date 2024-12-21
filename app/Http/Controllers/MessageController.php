@@ -4,9 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Events\MessageReceived;
 use App\Models\Message;
-use App\Http\Requests\StoreMessageRequest;
-use App\Http\Requests\UpdateMessageRequest;
-use App\Models\User;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -42,7 +39,6 @@ class MessageController extends Controller
             "content" => $validated['content'],
             "user_id" => auth()->user()->id
         ]);
-
         MessageReceived::dispatch($message, auth()->user());
     }
 
