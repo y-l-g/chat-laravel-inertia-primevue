@@ -1,0 +1,130 @@
+services:
+  #################################################
+  # DB (MySQL)
+  #################################################
+  db:
+    image: "mysql:8.0"
+    restart: always
+    volumes:
+      - laravel_chat_app_mysql_data:/var/lib/mysql
+    environment:
+      MYSQL_DATABASE_FILE: /run/secrets/laravel_app_DB_DATABASE
+      MYSQL_ROOT_PASSWORD_FILE: /run/secrets/laravel_app_DB_PASSWORD
+      MYSQL_PASSWORD_FILE: /run/secrets/laravel_app_DB_PASSWORD
+      MYSQL_USER_FILE: /run/secrets/laravel_app_DB_USERNAME
+    secrets:
+      - laravel_chat_app_DB_DATABASE
+      - laravel_chat_app_DB_PASSWORD
+      - laravel_chat_app_DB_USERNAME
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      start_period: 20s
+    networks:
+      - laravel_chat_app
+  ##################################################
+  # REDIS
+  ##################################################
+  redis:
+    image: "redis:7.4"
+    restart: always
+    volumes:
+      - "laravel_app_redis_data:/data"
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      start_period: 20s
+    environment:
+      - REDIS_PASSWORD_FILE=/run/secrets/laravel_app_REDIS_PASSWORD
+    secrets:
+      - laravel_chat_app_REDIS_PASSWORD
+    command: sh -c 'redis-server --appendonly yes --requirepass $$(cat /run/secrets/laravel_app_REDIS_PASSWORD | tr -d " \t\n\r")'
+    networks:
+      - laravel_chat_app
+  #################################################
+  # OCTANE:FRANKENPHP
+  #################################################
+  app:
+    image: ghcr.io/y-l-g/test-inertia2.0:main
+    restart: always
+    volumes:
+      - laravel_chat_app_caddy_data:/data
+      - laravel_chat_app_caddy_config:/config
+    healthcheck:
+      test: ["CMD", "php", "artisan", "octane:status"]
+      start_period: 20s
+    command: sh -c 'php artisan octane:frankenphp --host=0.0.0.0'
+    environment:
+      - APP_NAME=laravel_chat_app
+    secrets:
+      - laravel_chat_app_DB_DATABASE
+      - laravel_chat_app_DB_PASSWORD
+      - laravel_chat_app_DB_USERNAME
+      - laravel_chat_app_REDIS_PASSWORD
+      - laravel_chat_app_APP_URL
+      - laravel_chat_app_APP_KEY
+    entrypoint: start-container
+    networks:
+      - laravel_chat_app
+      - caddy_network
+  ##################################################
+  # HORIZON
+  ##################################################
+  horizon:
+    build:
+      target: common
+    restart: always
+    volumes:
+      - laravel_chat_app_horizon_data:/data
+      - laravel_chat_app_horizon_config:/config
+    command: ["php", "artisan", "horizon"]
+    healthcheck:
+      test: ["CMD", "php", "artisan", "horizon:status"]
+    networks:
+      - laravel_chat_app
+    ##################################################
+  # REVERB
+  ##################################################
+  reverb:
+    build:
+      target: common
+    restart: always
+    volumes:
+      - laravel_chat_app_reverb_data:/data
+      - laravel_chat_app_reverb_config:/config
+    command: ["php", "artisan", "reverb:start", "--debug"]
+    healthcheck:
+      test: ["CMD", "pgrep", "-f", "reverb:start"]
+      start_period: 10s
+  ##################################################
+  # VOLUMES
+  ##################################################
+volumes:
+  laravel_chat_app_caddy_data:
+  laravel_chat_app_caddy_config:
+  ##################################################
+  laravel_chat_app_mysql_data:
+  laravel_chat_app_redis_data:
+  ##################################################
+  laravel_chat_app_horizon_data:
+  laravel_chat_app_horizon_config:
+  ##################################################
+  laravel_chat_app_reverb_data:
+  laravel_chat_app_reverb_config:
+secrets:
+  laravel_chat_app_DB_DATABASE:
+    external: true
+  laravel_chat_app_DB_PASSWORD:
+    external: true
+  laravel_chat_app_DB_USERNAME:
+    external: true
+  laravel_chat_app_REDIS_PASSWORD:
+    external: true
+  laravel_chat_app_APP_URL:
+    external: true
+  laravel_chat_app_APP_KEY:
+    external: true
+networks:
+  laravel_chat_app:
+    driver: overlay
+    attachable: true
+  caddy_network:
+    external: true

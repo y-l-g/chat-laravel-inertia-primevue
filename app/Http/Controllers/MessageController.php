@@ -26,7 +26,6 @@ class MessageController extends Controller
         ]);
     }
 
-
     /**
      * Store a newly created resource in storage.
      */
@@ -41,8 +40,6 @@ class MessageController extends Controller
         ]);
         MessageReceived::dispatch($message, auth()->user());
     }
-
-
     /**
      * Update the specified resource in storage.
      */
