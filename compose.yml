@@ -33,10 +33,10 @@ services:
       test: ["CMD", "redis-cli", "ping"]
       start_period: 20s
     environment:
-      - REDIS_PASSWORD_FILE=/run/secrets/laravel_app_REDIS_PASSWORD
+      - REDIS_PASSWORD_FILE=/run/secrets/laravel_chat_app_REDIS_PASSWORD
     secrets:
       - laravel_chat_app_REDIS_PASSWORD
-    command: sh -c 'redis-server --appendonly yes --requirepass $$(cat /run/secrets/laravel_app_REDIS_PASSWORD | tr -d " \t\n\r")'
+    command: sh -c 'redis-server --appendonly yes --requirepass $$(cat /run/secrets/laravel_chat_app_REDIS_PASSWORD | tr -d " \t\n\r")'
     networks:
       - laravel_chat_app
   #################################################
