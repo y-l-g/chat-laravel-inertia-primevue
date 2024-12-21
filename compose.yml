@@ -8,10 +8,10 @@ services:
     volumes:
       - laravel_chat_app_mysql_data:/var/lib/mysql
     environment:
-      MYSQL_DATABASE_FILE: /run/secrets/laravel_app_DB_DATABASE
-      MYSQL_ROOT_PASSWORD_FILE: /run/secrets/laravel_app_DB_PASSWORD
-      MYSQL_PASSWORD_FILE: /run/secrets/laravel_app_DB_PASSWORD
-      MYSQL_USER_FILE: /run/secrets/laravel_app_DB_USERNAME
+      MYSQL_DATABASE_FILE: /run/secrets/laravel_chat_app_DB_DATABASE
+      MYSQL_ROOT_PASSWORD_FILE: /run/secrets/laravel_chat_app_DB_PASSWORD
+      MYSQL_PASSWORD_FILE: /run/secrets/laravel_chat_app_DB_PASSWORD
+      MYSQL_USER_FILE: /run/secrets/laravel_chat_app_DB_USERNAME
     secrets:
       - laravel_chat_app_DB_DATABASE
       - laravel_chat_app_DB_PASSWORD
