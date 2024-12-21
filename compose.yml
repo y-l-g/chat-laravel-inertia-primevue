@@ -43,7 +43,7 @@ services:
   # OCTANE:FRANKENPHP
   #################################################
   app:
-    image: ghcr.io/y-l-g/test-inertia2.0:main
+    image: gchr.io/y-l-g/chat-laravel-inertia-primevue:main
     restart: always
     volumes:
       - laravel_chat_app_app_data:/data
@@ -72,8 +72,7 @@ services:
   # HORIZON
   ##################################################
   horizon:
-    build:
-      target: common
+    image: gchr.io/y-l-g/chat-laravel-inertia-primevue:main
     restart: always
     volumes:
       - laravel_chat_app_horizon_data:/data
@@ -97,8 +96,7 @@ services:
   # REVERB
   ##################################################
   reverb:
-    build:
-      target: common
+    image: gchr.io/y-l-g/chat-laravel-inertia-primevue:main
     restart: always
     volumes:
       - laravel_chat_app_reverb_data:/data
