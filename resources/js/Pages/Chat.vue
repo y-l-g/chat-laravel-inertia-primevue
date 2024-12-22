@@ -4,7 +4,6 @@ import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import 'dayjs/locale/fr'
 import { router, useForm } from '@inertiajs/vue3';
-import axios from 'axios';
 import 'emoji-picker-element';
 import ThemeSwitcher from '../components/ThemeSwitcher.vue';
 dayjs.locale('fr') // use loaded locale globally
@@ -38,7 +37,7 @@ const form = useForm({
 
 window.Echo.channel('messages')
     .listen("MessageReceived", (response => {
-        router.reload()
+        router.reload({ only: ['messages'] })
     }))
 
 </script>
