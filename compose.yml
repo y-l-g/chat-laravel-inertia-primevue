@@ -4,7 +4,6 @@ services:
   #################################################
   db:
     image: "mysql:8.0"
-    restart: always
     volumes:
       - laravel_chat_app_mysql_data:/var/lib/mysql
     environment:
@@ -26,17 +25,16 @@ services:
   ##################################################
   redis:
     image: "redis:7.4"
-    restart: always
     volumes:
       - "laravel_chat_app_redis_data:/data"
     healthcheck:
       test: ["CMD", "redis-cli", "ping"]
       start_period: 20s
-    # environment:
-    #   - REDIS_PASSWORD_FILE=/run/secrets/laravel_chat_app_REDIS_PASSWORD
-    # secrets:
-    #   - laravel_chat_app_REDIS_PASSWORD
-    # command: sh -c 'redis-server --appendonly yes --requirepass $$(cat /run/secrets/laravel_chat_app_REDIS_PASSWORD | tr -d " \t\n\r")'
+    environment:
+      - REDIS_PASSWORD_FILE=/run/secrets/laravel_chat_app_REDIS_PASSWORD
+    secrets:
+      - laravel_chat_app_REDIS_PASSWORD
+    command: sh -c 'redis-server --appendonly yes --requirepass $$(cat /run/secrets/laravel_chat_app_REDIS_PASSWORD | tr -d " \t\n\r")'
     networks:
       - laravel_chat_app
   #################################################
@@ -44,7 +42,6 @@ services:
   #################################################
   app:
     image: ghcr.io/y-l-g/chat-laravel-inertia-primevue:main
-    restart: always
     volumes:
       - laravel_chat_app_app_data:/data
       - laravel_chat_app_app_config:/config
@@ -58,7 +55,7 @@ services:
       - laravel_chat_app_DB_DATABASE
       - laravel_chat_app_DB_PASSWORD
       - laravel_chat_app_DB_USERNAME
-      # - laravel_chat_app_REDIS_PASSWORD
+      - laravel_chat_app_REDIS_PASSWORD
       - laravel_chat_app_APP_URL
       - laravel_chat_app_APP_KEY
       - laravel_chat_app_REVERB_APP_SECRET
@@ -73,7 +70,6 @@ services:
   ##################################################
   horizon:
     image: ghcr.io/y-l-g/chat-laravel-inertia-primevue:main
-    restart: always
     volumes:
       - laravel_chat_app_horizon_data:/data
       - laravel_chat_app_horizon_config:/config
@@ -84,12 +80,13 @@ services:
       - laravel_chat_app_DB_DATABASE
       - laravel_chat_app_DB_PASSWORD
       - laravel_chat_app_DB_USERNAME
-      # - laravel_chat_app_REDIS_PASSWORD
+      - laravel_chat_app_REDIS_PASSWORD
       - laravel_chat_app_APP_URL
       - laravel_chat_app_APP_KEY
       - laravel_chat_app_REVERB_APP_SECRET
       - laravel_chat_app_REVERB_APP_KEY
       - laravel_chat_app_REVERB_APP_ID
+    entrypoint: start-container
     networks:
       - laravel_chat_app
     ##################################################
@@ -106,12 +103,13 @@ services:
       - laravel_chat_app_DB_DATABASE
       - laravel_chat_app_DB_PASSWORD
       - laravel_chat_app_DB_USERNAME
-      # - laravel_chat_app_REDIS_PASSWORD
+      - laravel_chat_app_REDIS_PASSWORD
       - laravel_chat_app_APP_URL
       - laravel_chat_app_APP_KEY
       - laravel_chat_app_REVERB_APP_SECRET
       - laravel_chat_app_REVERB_APP_KEY
       - laravel_chat_app_REVERB_APP_ID
+    entrypoint: start-container
     healthcheck:
       test: ["CMD", "pgrep", "-f", "reverb:start"]
       start_period: 10s
@@ -139,8 +137,8 @@ secrets:
     external: true
   laravel_chat_app_DB_USERNAME:
     external: true
-  # laravel_chat_app_REDIS_PASSWORD:
-  #   external: true
+  laravel_chat_app_REDIS_PASSWORD:
+    external: true
   laravel_chat_app_APP_URL:
     external: true
   laravel_chat_app_APP_KEY:
