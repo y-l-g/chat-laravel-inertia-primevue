@@ -32,11 +32,11 @@ services:
     healthcheck:
       test: ["CMD", "redis-cli", "ping"]
       start_period: 20s
-    environment:
-      - REDIS_PASSWORD_FILE=/run/secrets/laravel_chat_app_REDIS_PASSWORD
-    secrets:
-      - laravel_chat_app_REDIS_PASSWORD
-    command: sh -c 'redis-server --appendonly yes --requirepass $$(cat /run/secrets/laravel_chat_app_REDIS_PASSWORD | tr -d " \t\n\r")'
+    # environment:
+    #   - REDIS_PASSWORD_FILE=/run/secrets/laravel_chat_app_REDIS_PASSWORD
+    # secrets:
+    #   - laravel_chat_app_REDIS_PASSWORD
+    # command: sh -c 'redis-server --appendonly yes --requirepass $$(cat /run/secrets/laravel_chat_app_REDIS_PASSWORD | tr -d " \t\n\r")'
     networks:
       - laravel_chat_app
   #################################################
@@ -115,6 +115,8 @@ services:
     healthcheck:
       test: ["CMD", "pgrep", "-f", "reverb:start"]
       start_period: 10s
+    networks:
+      - laravel_chat_app
   ##################################################
   # VOLUMES
   ##################################################
@@ -137,8 +139,8 @@ secrets:
     external: true
   laravel_chat_app_DB_USERNAME:
     external: true
-  laravel_chat_app_REDIS_PASSWORD:
-    external: true
+  # laravel_chat_app_REDIS_PASSWORD:
+  #   external: true
   laravel_chat_app_APP_URL:
     external: true
   laravel_chat_app_APP_KEY:
