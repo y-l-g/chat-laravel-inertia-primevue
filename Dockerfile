@@ -66,8 +66,6 @@ COPY --link --chmod=755 start-container.sh /usr/local/bin/start-container
 
 COPY --link . .
 
-RUN npm run build
-
 RUN composer dump-autoload \
     --no-dev \
     --classmap-authoritative \
