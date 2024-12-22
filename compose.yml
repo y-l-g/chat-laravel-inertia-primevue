@@ -61,6 +61,7 @@ services:
       - laravel_chat_app_REVERB_APP_SECRET
       - laravel_chat_app_REVERB_APP_KEY
       - laravel_chat_app_REVERB_APP_ID
+      - laravel_chat_app_APP_DOMAIN
     entrypoint: start-container
     networks:
       - laravel_chat_app
@@ -86,6 +87,7 @@ services:
       - laravel_chat_app_REVERB_APP_SECRET
       - laravel_chat_app_REVERB_APP_KEY
       - laravel_chat_app_REVERB_APP_ID
+      - laravel_chat_app_APP_DOMAIN
     entrypoint: start-container
     environment:
       - APP_NAME=laravel_chat_app
@@ -111,6 +113,7 @@ services:
       - laravel_chat_app_REVERB_APP_SECRET
       - laravel_chat_app_REVERB_APP_KEY
       - laravel_chat_app_REVERB_APP_ID
+      - laravel_chat_app_APP_DOMAIN
     entrypoint: start-container
     environment:
       - APP_NAME=laravel_chat_app
@@ -152,6 +155,8 @@ secrets:
   laravel_chat_app_REVERB_APP_KEY:
     external: true
   laravel_chat_app_REVERB_APP_ID:
+    external: true
+  laravel_chat_app_APP_DOMAIN:
     external: true
 networks:
   laravel_chat_app:
