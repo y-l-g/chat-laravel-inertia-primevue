@@ -39,6 +39,7 @@ class MessageController extends Controller
             "user_id" => auth()->user()->id
         ]);
         MessageReceived::dispatch($message, auth()->user());
+        return back();
     }
     /**
      * Update the specified resource in storage.
@@ -59,6 +60,6 @@ class MessageController extends Controller
     {
         Message::findOrFail($message->id)
             ->delete();
-
+        return back();
     }
 }
