@@ -16,6 +16,7 @@ return Application::configure(basePath: dirname(__DIR__))
             HandleInertiaRequests::class,
         ]);
         $middleware->trustHosts(at: ['laravel-chat-app.yleg.ovh']);
+        $middleware->trustProxies(at: '*');
     })
     ->withExceptions(function (Exceptions $exceptions) {
         //
