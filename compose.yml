@@ -112,6 +112,8 @@ services:
       - laravel_chat_app_REVERB_APP_KEY
       - laravel_chat_app_REVERB_APP_ID
     entrypoint: start-container
+    environment:
+      - APP_NAME=laravel_chat_app
     healthcheck:
       test: ["CMD", "pgrep", "-f", "reverb:start"]
       start_period: 10s
