@@ -122,6 +122,7 @@ services:
       start_period: 10s
     networks:
       - laravel_chat_app
+      - caddy_network
   ##################################################
   # VOLUMES
   ##################################################
