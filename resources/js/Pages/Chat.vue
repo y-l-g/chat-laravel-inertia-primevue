@@ -84,12 +84,22 @@ window.Echo.channel('messages')
         </ScrollPanel>
         <form
             class="flex p-5 dark:bg-surface-900 bg-surface-100 rounded-b-xl"
-            @submit.prevent="form.post('/'); form.content = ''; scrollToBottom()"
+            @submit.prevent="form.post('/', {
+                preserveScroll: true,
+                preserveState: true
+            });
+            form.content = '';
+            scrollToBottom()"
         >
             <IftaLabel class="grow">
                 <Textarea
                     @keydown.enter.exact.prevent
-                    @keyup.enter="form.post('/'); form.content = ''; scrollToBottom()"
+                    @keyup.enter="form.post('/', {
+                        preserveScroll: true,
+                        preserveState: true
+                    });
+                    form.content = '';
+                    scrollToBottom()"
                     id="message"
                     class="w-full"
                     v-model="form.content"
