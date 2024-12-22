@@ -58,7 +58,7 @@ services:
       - laravel_chat_app_DB_DATABASE
       - laravel_chat_app_DB_PASSWORD
       - laravel_chat_app_DB_USERNAME
-      - laravel_chat_app_REDIS_PASSWORD
+      # - laravel_chat_app_REDIS_PASSWORD
       - laravel_chat_app_APP_URL
       - laravel_chat_app_APP_KEY
       - laravel_chat_app_REVERB_APP_SECRET
@@ -84,7 +84,7 @@ services:
       - laravel_chat_app_DB_DATABASE
       - laravel_chat_app_DB_PASSWORD
       - laravel_chat_app_DB_USERNAME
-      - laravel_chat_app_REDIS_PASSWORD
+      # - laravel_chat_app_REDIS_PASSWORD
       - laravel_chat_app_APP_URL
       - laravel_chat_app_APP_KEY
       - laravel_chat_app_REVERB_APP_SECRET
@@ -106,7 +106,7 @@ services:
       - laravel_chat_app_DB_DATABASE
       - laravel_chat_app_DB_PASSWORD
       - laravel_chat_app_DB_USERNAME
-      - laravel_chat_app_REDIS_PASSWORD
+      # - laravel_chat_app_REDIS_PASSWORD
       - laravel_chat_app_APP_URL
       - laravel_chat_app_APP_KEY
       - laravel_chat_app_REVERB_APP_SECRET
