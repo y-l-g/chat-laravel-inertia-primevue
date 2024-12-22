@@ -15,6 +15,7 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->web(append: [
             HandleInertiaRequests::class,
         ]);
+        $middleware->trustHosts(at: ['laravel-chat-app.yleg.ovh']);
     })
     ->withExceptions(function (Exceptions $exceptions) {
         //
